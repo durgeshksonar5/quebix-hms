@@ -39,34 +39,34 @@ export default function Modal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-black/55 backdrop-blur-sm transition-opacity duration-300"
+        className="fixed inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-300"
         onClick={onClose}
       />
-
+ 
       {/* Modal Wrapper for Scrolling */}
       <div className="relative w-full flex items-center justify-center min-h-full pointer-events-none">
         {/* Modal Card */}
         <div 
-          className={`relative w-full transform overflow-hidden rounded-2xl bg-card border border-border text-left shadow-2xl transition-all duration-300 animate-zoom-in my-8 pointer-events-auto flex flex-col ${sizes[size]}`}
+          className={`relative w-full transform overflow-hidden rounded-[24px] bg-card/95 backdrop-blur-xl border border-border text-left shadow-2xl transition-all duration-300 animate-zoom-in my-8 pointer-events-auto flex flex-col ${sizes[size]}`}
           role="dialog"
           aria-modal="true"
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-border px-6 py-4">
-            <h3 className="text-lg font-semibold text-text leading-6">
+          <div className="flex items-center justify-between border-b border-border/50 px-6 py-5">
+            <h3 className="text-lg font-bold text-text tracking-tight leading-6">
               {title}
             </h3>
             {showClose && (
               <button
                 onClick={onClose}
                 type="button"
-                className="rounded-lg p-1.5 inline-flex items-center justify-center text-text-muted hover:text-text hover:bg-border transition-colors focus:outline-none"
+                className="rounded-full p-2 inline-flex items-center justify-center text-text-muted hover:text-text hover:bg-border/40 transition-all focus:outline-none cursor-pointer active:scale-90"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4.5 w-4.5" />
               </button>
             )}
           </div>
-
+ 
           {/* Body */}
           <div className="flex-1 overflow-y-auto px-6 py-5 max-h-[75vh]">
             {children}

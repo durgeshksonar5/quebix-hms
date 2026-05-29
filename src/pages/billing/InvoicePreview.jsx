@@ -3,6 +3,8 @@ import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { useReactToPrint } from 'react-to-print';
 import { ArrowLeft, Printer, FileText, Image, CheckCircle } from 'lucide-react';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 import InvoiceTemplate from '../../components/billing/InvoiceTemplate';
 import Button from '../../components/common/Button';
 
@@ -29,40 +31,34 @@ export default function InvoicePreview() {
 
     addToast('Generating PDF soft copy...', 'info');
 
-    // Dynamic import to keep bundle size optimized
-    Promise.all([
-      import('html2canvas'),
-      import('jspdf')
-    ]).then(([{ default: html2canvas }, { default: jsPDF }]) => {
-      html2canvas(element, {
-        scale: 2, // High resolution
-        useCORS: true,
-        backgroundColor: '#ffffff'
-      }).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgWidth = 210; // A4 Width in mm
-        const pageHeight = 297; // A4 Height in mm
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
+    html2canvas(element, {
+      scale: 2, // High resolution
+      useCORS: true,
+      backgroundColor: '#ffffff'
+    }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgWidth = 210; // A4 Width in mm
+      const pageHeight = 297; // A4 Height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
 
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
         pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
+      }
 
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-
-        pdf.save(`Invoice_${invoice.id}.pdf`);
-        addToast('PDF downloaded successfully', 'success');
-      }).catch((err) => {
-        console.error('PDF Generation failed:', err);
-        addToast('Failed to generate PDF', 'danger');
-      });
+      pdf.save(`Invoice_${invoice.id}.pdf`);
+      addToast('PDF downloaded successfully', 'success');
+    }).catch((err) => {
+      console.error('PDF Generation failed:', err);
+      addToast('Failed to generate PDF', 'danger');
     });
   };
 
@@ -74,22 +70,20 @@ export default function InvoicePreview() {
 
     addToast('Capturing soft copy image...', 'info');
 
-    import('html2canvas').then(({ default: html2canvas }) => {
-      html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: '#ffffff'
-      }).then((canvas) => {
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-        const link = document.createElement('a');
-        link.download = `Invoice_${invoice.id}.jpg`;
-        link.href = imgData;
-        link.click();
-        addToast('Invoice image saved successfully', 'success');
-      }).catch((err) => {
-        console.error('Image capture failed:', err);
-        addToast('Failed to save soft copy', 'danger');
-      });
+    html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff'
+    }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const link = document.createElement('a');
+      link.download = `Invoice_${invoice.id}.jpg`;
+      link.href = imgData;
+      link.click();
+      addToast('Invoice image saved successfully', 'success');
+    }).catch((err) => {
+      console.error('Image capture failed:', err);
+      addToast('Failed to save soft copy', 'danger');
     });
   };
 

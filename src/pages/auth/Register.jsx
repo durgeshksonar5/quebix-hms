@@ -38,19 +38,22 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg p-6">
-      <div className="max-w-md w-full bg-card border border-border rounded-2xl p-8 shadow-xl">
-        <div className="text-center mb-6">
-          <div className="flex justify-center mb-2">
-            <div className="flex items-center justify-center h-10 w-10 rounded-xl bg-primary text-white font-bold text-lg">
+    <div className="min-h-screen flex items-center justify-center app-bg p-6 relative">
+      <div className="absolute top-20 left-20 w-85 h-85 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-20 right-20 w-85 h-85 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-md w-full bg-card/70 backdrop-blur-xl border border-border/80 rounded-[28px] p-8.5 sm:p-10 shadow-2xl relative z-10">
+        <div className="text-center mb-8">
+          <div className="flex justify-center mb-3.5">
+            <div className="flex items-center justify-center h-11 w-11 rounded-xl bg-primary text-white font-bold text-xl shadow-lg shadow-primary/20">
               Q
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-text">Create Account</h2>
-          <p className="text-xs text-text-muted mt-1.5">Join the Quebix HMS digital portal</p>
+          <h2 className="text-3xl font-extrabold text-text tracking-tight">Create Account</h2>
+          <p className="text-xs text-text-muted/80 mt-2 font-medium">Join the Quebix HMS digital portal</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4.5">
           <InputField
             label="Full Name"
             type="text"
@@ -97,16 +100,16 @@ export default function Register() {
           <Button
             type="submit"
             variant="primary"
-            className="w-full"
+            className="w-full py-3 mt-3 text-sm font-bold rounded-xl shadow-lg shadow-primary/20 active:scale-95"
             disabled={isLoading}
           >
             {isLoading ? 'Creating Account...' : 'Sign Up'}
           </Button>
         </form>
 
-        <div className="mt-6 text-center text-xs text-text-muted">
+        <div className="mt-6 text-center text-xs text-text-muted/80 font-medium">
           Already have an account?{' '}
-          <Link to="/login" className="font-semibold text-primary hover:underline">
+          <Link to="/login" className="font-bold text-primary hover:underline hover:text-primary-dark transition-colors">
             Sign In here
           </Link>
         </div>

@@ -85,44 +85,44 @@ export default function Sidebar({ isOpen, onClose }) {
 
       {/* Sidebar container */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex flex-col w-64 bg-sidebar-bg border-r border-border/10 text-sidebar-text transform lg:transform-none lg:opacity-100 transition-all duration-300 ${
+        className={`fixed inset-y-0 left-0 z-50 flex flex-col w-64 bg-sidebar-bg/90 backdrop-blur-xl border-r border-border/60 text-sidebar-text transform lg:transform-none lg:opacity-100 transition-all duration-300 ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
         {/* Header Branding */}
-        <div className="flex items-center justify-between px-6 h-16 border-b border-border/10">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-border/40">
           <div className="flex items-center gap-2">
             <div className="flex items-center justify-center h-9 w-9 rounded-xl bg-primary text-white font-bold text-lg shadow-md shadow-primary/20">
               Q
             </div>
             <div>
-              <span className="font-bold text-base text-white tracking-wide">Quebix HMS</span>
-              <span className="text-xs text-primary font-semibold block -mt-1">Hospital System</span>
+              <span className="font-extrabold text-base text-text tracking-tight block">Quebix HMS</span>
+              <span className="text-[10px] text-primary font-bold block -mt-1 uppercase tracking-wider">Hospital System</span>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="lg:hidden p-1 rounded-lg text-sidebar-text hover:text-white hover:bg-white/10"
+            className="lg:hidden p-1.5 rounded-lg text-text-muted hover:text-text hover:bg-border/30"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* User Info Capsule */}
-        <div className="px-6 py-4 border-b border-border/10 flex items-center gap-3">
+        <div className="px-6 py-4 border-b border-border/40 flex items-center gap-3 bg-border/[0.04]">
           <img
             src={currentUser?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}
             alt="User avatar"
-            className="h-10 w-10 rounded-xl object-cover ring-2 ring-primary/40"
+            className="h-10 w-10 rounded-xl object-cover ring-2 ring-primary/30"
           />
           <div className="overflow-hidden">
-            <h4 className="text-sm font-semibold text-white truncate">{currentUser?.name || 'Quebix User'}</h4>
-            <span className="text-xs font-medium text-text-muted capitalize block">{currentUser?.role || 'Staff'}</span>
+            <h4 className="text-sm font-bold text-text truncate">{currentUser?.name || 'Quebix User'}</h4>
+            <span className="text-[10px] font-bold text-text-muted/80 uppercase tracking-wide block mt-0.5">{currentUser?.role || 'Staff'}</span>
           </div>
         </div>
 
         {/* Menu Navigation */}
-        <nav className="flex-1 px-4 py-4 overflow-y-auto space-y-1 select-none">
+        <nav className="flex-1 px-3 py-4 overflow-y-auto space-y-1 select-none">
           {filteredMenuItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -133,14 +133,14 @@ export default function Sidebar({ isOpen, onClose }) {
                   if (window.innerWidth < 1024) onClose();
                 }}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  `flex items-center gap-3 px-4.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 active:scale-95 ${
                     isActive
-                      ? 'bg-primary text-white shadow-md shadow-primary/10'
-                      : 'hover:bg-white/5 hover:text-white text-sidebar-text'
+                      ? 'bg-gradient-to-br from-primary to-primary-dark text-white shadow-md shadow-primary/15'
+                      : 'hover:bg-primary/[0.05] hover:text-primary dark:hover:bg-white/[0.05] dark:hover:text-white text-sidebar-text'
                   }`
                 }
               >
-                <Icon className="h-4 w-4 flex-shrink-0" />
+                <Icon className="h-4.5 w-4.5 flex-shrink-0" />
                 {item.name}
               </NavLink>
             );
@@ -148,12 +148,12 @@ export default function Sidebar({ isOpen, onClose }) {
         </nav>
 
         {/* Footer Logout */}
-        <div className="p-4 border-t border-border/10">
+        <div className="p-4 border-t border-border/40">
           <button
             onClick={logout}
-            className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium rounded-xl text-red-400 hover:bg-red-950/20 hover:text-red-300 transition-colors"
+            className="flex items-center gap-3 w-full px-4.5 py-2.5 text-sm font-semibold rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 hover:text-red-400 transition-all active:scale-95 cursor-pointer"
           >
-            <LogOut className="h-4 w-4" />
+            <LogOut className="h-4.5 w-4.5" />
             Sign Out
           </button>
         </div>
