@@ -18,6 +18,7 @@ import Appointments from './pages/appointments/Appointments';
 import Departments from './pages/departments/Departments';
 import Prescriptions from './pages/prescriptions/Prescriptions';
 import Billing from './pages/billing/Billing';
+import InvoicePreview from './pages/billing/InvoicePreview';
 import Pharmacy from './pages/pharmacy/Pharmacy';
 import Laboratory from './pages/laboratory/Laboratory';
 import RoomsBeds from './pages/rooms/RoomsBeds';
@@ -61,6 +62,7 @@ export default function App() {
               <Route path="/departments" element={<Departments />} />
               <Route path="/prescriptions" element={<Prescriptions />} />
               <Route path="/billing" element={<Billing />} />
+              <Route path="/billing/preview" element={<InvoicePreview />} />
               <Route path="/pharmacy" element={<Pharmacy />} />
               <Route path="/laboratory" element={<Laboratory />} />
               <Route path="/rooms" element={<RoomsBeds />} />
